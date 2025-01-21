@@ -1,8 +1,8 @@
-package nextstep.shoppingcart.domain.repository
+package nextstep.shoppingcart.data.source
 
 import nextstep.shoppingcart.domain.model.Product
 
-interface ProductRepository {
+interface ProductDataSource {
     fun getProducts(): Result<List<Product>>
 
     fun getProductById(productId: Long): Result<Product?>

@@ -1,14 +1,10 @@
 package nextstep.shoppingcart.domain.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
 data class ShoppingCartProduct(
     val id: Long,
     val product: Product,
     val quantity: Int,
-) : Parcelable {
+) {
     val totalPrice: Int get() = product.price * quantity
 
     fun plusQuantity(): ShoppingCartProduct {
