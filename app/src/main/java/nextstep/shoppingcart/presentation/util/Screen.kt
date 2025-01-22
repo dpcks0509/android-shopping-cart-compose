@@ -4,7 +4,9 @@ import kotlinx.serialization.Serializable
 
 sealed interface Screen {
     @Serializable
-    data object ProductListScreen : Screen
+    data class ProductListScreen(
+        val snackbarMessage: String? = null
+    ) : Screen
 
     @Serializable
     data class ProductDetailScreen(

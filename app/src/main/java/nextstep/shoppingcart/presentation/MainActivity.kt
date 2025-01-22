@@ -25,10 +25,15 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
-                    startDestination = ProductListScreen
+                    startDestination = ProductListScreen()
                 ) {
                     composable<ProductListScreen> {
-                        ProductListScreen(navController = navController)
+                        val args = it.toRoute<ProductListScreen>()
+
+                        ProductListScreen(
+                            navController = navController,
+                            snackbarMessage = args.snackbarMessage
+                        )
                     }
 
                     composable<ProductDetailScreen> {

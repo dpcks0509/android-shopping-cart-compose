@@ -9,12 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -23,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import kotlinx.coroutines.launch
 import nextstep.shoppingcart.domain.model.Product
 import nextstep.shoppingcart.domain.model.ShoppingCartProduct
 import nextstep.shoppingcart.presentation.component.BackNavigationTopAppBar
@@ -50,8 +44,6 @@ private fun ShoppingCartContent(
     state: ShoppingCartState,
     onEvent: (ShoppingCartEvent) -> Unit
 ) {
-    val coroutineScope = rememberCoroutineScope()
-    val snackbarHostState = remember { SnackbarHostState() }
     val snackbarMessage = stringResource(R.string.shopping_cart_order_completed)
 
     Scaffold(
@@ -63,7 +55,6 @@ private fun ShoppingCartContent(
                 modifier = Modifier.padding(horizontal = 4.dp, vertical = 8.dp),
             )
         },
-        snackbarHost = { SnackbarHost(snackbarHostState) },
     ) { contentPadding ->
         Column(
             modifier = Modifier
@@ -86,13 +77,7 @@ private fun ShoppingCartContent(
             RectangleButton(
                 onClick = {
                     onEvent(ShoppingCartEvent.ClearProducts)
-                    coroutineScope.launch {
-                        snackbarHostState.showSnackbar(
-                            message = snackbarMessage,
-                            duration = SnackbarDuration.Short,
-                        )
-                    }
-                    navController.navigate(ProductListScreen)
+                    navController.navigate(ProductListScreen(snackbarMessage = snackbarMessage))
                 },
                 text =
                 stringResource(
