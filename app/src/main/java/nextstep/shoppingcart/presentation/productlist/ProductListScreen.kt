@@ -1,6 +1,5 @@
 package nextstep.shoppingcart.presentation.productlist
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -41,8 +40,6 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import nextstep.shoppingcart.presentation.mapper.toUi
-import nextstep.shoppingcart.presentation.productlist.ProductListEvent.AddProduct
-import nextstep.shoppingcart.presentation.productlist.ProductListEvent.DecreaseProductQuantity
 import nextstep.shoppingcart.presentation.ui.theme.ShoppingCartTheme
 import nextstep.shoppingcart.presentation.util.Screen.ProductDetailScreen
 import nextstep.shoppingcart.presentation.util.Screen.ShoppingCartScreen
@@ -142,23 +139,14 @@ fun ProductListContent(
                     items = state.products,
                     key = { productItem -> productItem.product.id },
                 ) { productItem ->
+                    val navigateToProductDetail = remember(productItem.product.id) {
+                        { navController.navigate(ProductDetailScreen(productId = productItem.product.id)) }
+                    }
+
                     ProductItem(
                         item = productItem,
-                        event = { event ->
-                            when (event) {
-                                is AddProduct -> {
-                                    onEvent(AddProduct(product = event.product))
-                                }
-
-                                is DecreaseProductQuantity -> {
-                                    onEvent(DecreaseProductQuantity(product = event.product))
-                                }
-                            }
-                        },
-                        modifier =
-                        Modifier.clickable {
-                            navController.navigate(ProductDetailScreen(productId = productItem.product.id))
-                        },
+                        onEvent = onEvent,
+                        onClick = navigateToProductDetail
                     )
                 }
             }
@@ -179,6 +167,7 @@ fun ProductListContent(
         }
     }
 }
+
 
 @Composable
 @Preview(showBackground = true)

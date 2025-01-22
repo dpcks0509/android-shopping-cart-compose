@@ -1,8 +1,10 @@
 package nextstep.shoppingcart.presentation.productlist
 
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,10 +24,6 @@ class ProductListViewModel @Inject constructor(
 ) : ViewModel() {
     var state by mutableStateOf(ProductListState())
         private set
-
-    init {
-        loadProducts()
-    }
 
     fun onEvent(event: ProductListEvent) {
         when (event) {
@@ -52,14 +50,14 @@ class ProductListViewModel @Inject constructor(
                     }
 
                     state = state.copy(
-                        products = productUiModels.toList(),
+                        products = productUiModels.toMutableStateList(),
                         isLoading = false,
                         error = null
                     )
                 },
                 onFailure = { error ->
                     state = state.copy(
-                        products = emptyList(),
+                        products = mutableStateListOf(),
                         isLoading = false,
                         error = error.message
                     )
@@ -79,13 +77,10 @@ class ProductListViewModel @Inject constructor(
     }
 
     private fun updateProductQuantity(productId: Long, value: Int) {
-        val updatedProducts = state.products.map { productUiModel ->
-            if (productUiModel.product.id == productId) {
-                productUiModel.copy(quantity = productUiModel.quantity + value)
-            } else {
-                productUiModel
-            }
+        val index = state.products.indexOfFirst { productItem ->
+            productItem.product.id == productId
         }
-        state = state.copy(products = updatedProducts)
+        state.products[index] =
+            state.products[index].copy(quantity = state.products[index].quantity + value)
     }
 }

@@ -1,6 +1,7 @@
 package nextstep.shoppingcart.presentation.productlist
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -37,11 +38,11 @@ import nextstep.signup.R
 @Composable
 fun ProductItem(
     item: ProductUiModel,
-    event: (ProductListEvent) -> Unit,
-    modifier: Modifier = Modifier,
+    onEvent: (ProductListEvent) -> Unit,
+    onClick: () -> Unit
 ) {
     Column(
-        modifier = modifier,
+        modifier = Modifier.clickable(onClick = onClick),
     ) {
         Box {
             ProductImage(
@@ -56,8 +57,8 @@ fun ProductItem(
             if (item.quantity > 0) {
                 QuantityControlButton(
                     quantity = item.quantity,
-                    minusQuantity = { event(DecreaseProductQuantity(product = item.product)) },
-                    plusQuantity = { event(AddProduct(product = item.product)) },
+                    minusQuantity = { onEvent(DecreaseProductQuantity(product = item.product)) },
+                    plusQuantity = { onEvent(AddProduct(product = item.product)) },
                     modifier =
                     Modifier
                         .fillMaxWidth()
@@ -68,7 +69,7 @@ fun ProductItem(
                 )
             } else {
                 PlusButton(
-                    onClick = { event(AddProduct(product = item.product)) },
+                    onClick = { onEvent(AddProduct(product = item.product)) },
                     modifier =
                     Modifier
                         .padding(12.dp)
@@ -103,7 +104,7 @@ private fun ProductItemPreview(
     @PreviewParameter(ProductItemPreviewParameterProvider::class) item: ProductUiModel,
 ) {
     ShoppingCartTheme {
-        ProductItem(item = item, event = {})
+        ProductItem(item = item, onEvent = {}, onClick = {})
     }
 }
 

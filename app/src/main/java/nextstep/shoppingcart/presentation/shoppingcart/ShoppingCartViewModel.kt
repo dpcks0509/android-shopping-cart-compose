@@ -18,10 +18,6 @@ class ShoppingCartViewModel @Inject constructor(
     var state by mutableStateOf(ShoppingCartState())
         private set
 
-    init {
-        loadShoppingCartProducts()
-    }
-
     fun onEvent(event: ShoppingCartEvent) {
         when (event) {
             is ShoppingCartEvent.AddProduct -> addProduct(event.product)
@@ -31,7 +27,7 @@ class ShoppingCartViewModel @Inject constructor(
         }
     }
 
-    private fun loadShoppingCartProducts() {
+    fun loadShoppingCartProducts() {
         shoppingCartUseCase.getShoppingCartProducts().fold(onSuccess = { shoppingCartProducts ->
             state = state.copy(
                 shoppingCartProducts = shoppingCartProducts.toMutableStateList(),
