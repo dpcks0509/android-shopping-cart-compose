@@ -1,6 +1,5 @@
 package nextstep.shoppingcart.presentation.shoppingcart
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +15,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,6 +29,7 @@ import nextstep.shoppingcart.domain.model.ShoppingCartProduct
 import nextstep.shoppingcart.presentation.component.BackNavigationTopAppBar
 import nextstep.shoppingcart.presentation.component.RectangleButton
 import nextstep.shoppingcart.presentation.ui.theme.ShoppingCartTheme
+import nextstep.shoppingcart.presentation.util.Screen.ProductListScreen
 import nextstep.signup.R
 
 @Composable
@@ -68,9 +69,10 @@ private fun ShoppingCartContent(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(contentPadding),
-            verticalArrangement = Arrangement.SpaceBetween,
         ) {
             LazyColumn(
+                modifier = Modifier
+                    .weight(1f),
                 state = rememberLazyListState(),
             ) {
                 items(
@@ -90,6 +92,7 @@ private fun ShoppingCartContent(
                             duration = SnackbarDuration.Short,
                         )
                     }
+                    navController.navigate(ProductListScreen)
                 },
                 text =
                 stringResource(
@@ -164,8 +167,7 @@ private fun ShoppingCartScreenPreview() {
                         ),
                         quantity = 1
                     )
-                ),
-                totalPrice = 48000
+                ).toMutableStateList()
             ),
             onEvent = {}
         )
