@@ -3,32 +3,22 @@ package nextstep.shoppingcart.presentation.productdetail
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.toRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import nextstep.shoppingcart.domain.model.Product
 import nextstep.shoppingcart.domain.usecase.product.ProductUseCase
 import nextstep.shoppingcart.domain.usecase.shoppingcart.ShoppingCartUseCase
-import nextstep.shoppingcart.presentation.util.Screen.ProductDetailScreen
 import javax.inject.Inject
 
 @HiltViewModel
 class ProductDetailViewModel @Inject constructor(
     private val productUseCase: ProductUseCase,
     private val shoppingCartUseCase: ShoppingCartUseCase,
-    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     var state by mutableStateOf(ProductDetailState())
         private set
-
-    private val productId = savedStateHandle.toRoute<ProductDetailScreen>().productId
-
-    init {
-        loadProduct(productId = productId)
-    }
 
     fun onEvent(event: ProductDetailEvent) {
         when (event) {
@@ -38,7 +28,7 @@ class ProductDetailViewModel @Inject constructor(
         }
     }
 
-    private fun loadProduct(productId: Long) {
+    fun loadProduct(productId: Long) {
         viewModelScope.launch {
             state = state.copy(
                 isLoading = true,
