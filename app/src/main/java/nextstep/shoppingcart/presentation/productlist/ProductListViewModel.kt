@@ -10,7 +10,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import nextstep.shoppingcart.domain.model.Product
@@ -30,9 +29,7 @@ class ProductListViewModel @Inject constructor(
 ) : ViewModel() {
     private val _state: MutableStateFlow<ProductListState> =
         MutableStateFlow(ProductListState(snackbarMessage = savedStateHandle.toRoute<Screen.ProductListScreen>().snackbarMessage))
-    val state: StateFlow<ProductListState> = _state.onStart {
-        loadProducts()
-    }.stateIn(
+    val state: StateFlow<ProductListState> = _state.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = ProductListState(isLoading = true)
@@ -45,11 +42,7 @@ class ProductListViewModel @Inject constructor(
         }
     }
 
-    fun clearSnackbarMessage() {
-        _state.value = _state.value.copy(snackbarMessage = null)
-    }
-
-    private fun loadProducts() {
+    fun loadProducts() {
         viewModelScope.launch {
             productUseCase.getProducts().fold(
                 onSuccess = { products ->
@@ -76,6 +69,10 @@ class ProductListViewModel @Inject constructor(
                 }
             )
         }
+    }
+
+    fun clearSnackbarMessage() {
+        _state.value = _state.value.copy(snackbarMessage = null)
     }
 
     private fun addProduct(product: Product) {

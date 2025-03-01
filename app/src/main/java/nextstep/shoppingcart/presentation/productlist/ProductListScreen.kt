@@ -57,6 +57,10 @@ fun ProductListScreen(
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    LaunchedEffect(true) {
+        viewModel.loadProducts()
+    }
+
     LaunchedEffect(state.snackbarMessage) {
         state.snackbarMessage?.let { snackbarMessage ->
             coroutineScope.launch {

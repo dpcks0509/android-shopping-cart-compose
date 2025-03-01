@@ -73,6 +73,7 @@ class ShoppingCartViewModel @Inject constructor(
             _state.value.shoppingCartProducts[index] =
                 _state.value.shoppingCartProducts[index].copy(quantity = _state.value.shoppingCartProducts[index].quantity - 1)
         } else {
+            shoppingCartUseCase.removeProduct(product)
             _state.value.shoppingCartProducts.removeAt(index)
         }
     }
