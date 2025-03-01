@@ -2,12 +2,16 @@ package nextstep.shoppingcart.presentation.productlist
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.toMutableStateList
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import nextstep.shoppingcart.domain.model.Product
 import nextstep.shoppingcart.domain.model.ProductUiModel
@@ -15,19 +19,24 @@ import nextstep.shoppingcart.domain.usecase.product.ProductUseCase
 import nextstep.shoppingcart.domain.usecase.shoppingcart.ShoppingCartUseCase
 import nextstep.shoppingcart.presentation.productlist.ProductListEvent.AddProduct
 import nextstep.shoppingcart.presentation.productlist.ProductListEvent.DecreaseProductQuantity
+import nextstep.shoppingcart.presentation.util.Screen
 import javax.inject.Inject
 
 @HiltViewModel
 class ProductListViewModel @Inject constructor(
     private val productUseCase: ProductUseCase,
-    private val shoppingCartUseCase: ShoppingCartUseCase
+    private val shoppingCartUseCase: ShoppingCartUseCase,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val _state: MutableStateFlow<ProductListState> = MutableStateFlow(ProductListState())
-    val state: StateFlow<ProductListState> = _state.asStateFlow()
-
-    init {
+    private val _state: MutableStateFlow<ProductListState> =
+        MutableStateFlow(ProductListState(snackbarMessage = savedStateHandle.toRoute<Screen.ProductListScreen>().snackbarMessage))
+    val state: StateFlow<ProductListState> = _state.onStart {
         loadProducts()
-    }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = ProductListState(isLoading = true)
+    )
 
     fun onEvent(event: ProductListEvent) {
         when (event) {
@@ -36,13 +45,12 @@ class ProductListViewModel @Inject constructor(
         }
     }
 
+    fun clearSnackbarMessage() {
+        _state.value = _state.value.copy(snackbarMessage = null)
+    }
+
     private fun loadProducts() {
         viewModelScope.launch {
-            _state.value = _state.value.copy(
-                isLoading = true,
-                error = null
-            )
-
             productUseCase.getProducts().fold(
                 onSuccess = { products ->
                     val productUiModels = products.map { product ->

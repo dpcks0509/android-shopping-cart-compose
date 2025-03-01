@@ -28,11 +28,8 @@ class MainActivity : ComponentActivity() {
                     startDestination = ProductListScreen()
                 ) {
                     composable<ProductListScreen> {
-                        val args = it.toRoute<ProductListScreen>()
-
                         ProductListScreen(
                             navController = navController,
-                            snackbarMessage = args.snackbarMessage
                         )
                     }
 

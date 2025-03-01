@@ -39,7 +39,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import nextstep.shoppingcart.presentation.mapper.toUi
 import nextstep.shoppingcart.presentation.ui.theme.ShoppingCartTheme
@@ -51,7 +50,6 @@ import nextstep.signup.R
 @Composable
 fun ProductListScreen(
     navController: NavController,
-    snackbarMessage: String? = null,
     viewModel: ProductListViewModel = hiltViewModel(),
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -59,11 +57,21 @@ fun ProductListScreen(
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    LaunchedEffect(state.snackbarMessage) {
+        state.snackbarMessage?.let { snackbarMessage ->
+            coroutineScope.launch {
+                snackbarHostState.showSnackbar(
+                    message = snackbarMessage,
+                    duration = SnackbarDuration.Short
+                )
+            }
+            viewModel.clearSnackbarMessage()
+        }
+    }
+
     ProductListContent(
         navController = navController,
-        coroutineScope = coroutineScope,
         snackbarHostState = snackbarHostState,
-        snackbarMessage = snackbarMessage,
         state = state,
         onEvent = viewModel::onEvent,
     )
@@ -73,9 +81,7 @@ fun ProductListScreen(
 @Composable
 fun ProductListContent(
     navController: NavController,
-    coroutineScope: CoroutineScope,
     snackbarHostState: SnackbarHostState,
-    snackbarMessage: String?,
     state: ProductListState,
     onEvent: (ProductListEvent) -> Unit
 ) {
@@ -107,17 +113,6 @@ fun ProductListContent(
         },
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { contentPadding ->
-        if (snackbarMessage != null) {
-            LaunchedEffect(key1 = snackbarMessage) {
-                coroutineScope.launch {
-                    snackbarHostState.showSnackbar(
-                        message = snackbarMessage,
-                        duration = SnackbarDuration.Short
-                    )
-                }
-            }
-        }
-
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -175,9 +170,7 @@ private fun ProductListScreenPreView() {
     ShoppingCartTheme {
         ProductListContent(
             navController = rememberNavController(),
-            coroutineScope = rememberCoroutineScope(),
             snackbarHostState = SnackbarHostState(),
-            snackbarMessage = null,
             state = ProductListState(products = products.toUi()),
             onEvent = {}
         )

@@ -45,13 +45,8 @@ class ProductDetailViewModel @Inject constructor(
         }
     }
 
-    fun loadProduct(productId: Long) {
+    private fun loadProduct(productId: Long) {
         viewModelScope.launch {
-            _state.value = _state.value.copy(
-                isLoading = true,
-                error = null
-            )
-
             productUseCase.getProduct(productId = productId).fold(
                 onSuccess = { product ->
                     _state.value = _state.value.copy(
