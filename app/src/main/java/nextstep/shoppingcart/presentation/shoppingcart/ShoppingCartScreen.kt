@@ -38,7 +38,7 @@ fun ShoppingCartScreen(
     ShoppingCartContent(
         navController = navController,
         state = state,
-        onEvent = viewModel::onEvent
+        onEvent = viewModel::onEvent,
     )
 }
 
@@ -46,7 +46,7 @@ fun ShoppingCartScreen(
 private fun ShoppingCartContent(
     navController: NavController,
     state: ShoppingCartState,
-    onEvent: (ShoppingCartEvent) -> Unit
+    onEvent: (ShoppingCartEvent) -> Unit,
 ) {
     val snackbarMessage = stringResource(R.string.shopping_cart_order_completed)
 
@@ -61,13 +61,15 @@ private fun ShoppingCartContent(
         },
     ) { contentPadding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(contentPadding),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(contentPadding),
         ) {
             LazyColumn(
-                modifier = Modifier
-                    .weight(1f),
+                modifier =
+                    Modifier
+                        .weight(1f),
                 state = rememberLazyListState(),
             ) {
                 items(
@@ -84,15 +86,15 @@ private fun ShoppingCartContent(
                     navController.navigate(ProductListScreen(snackbarMessage = snackbarMessage))
                 },
                 text =
-                stringResource(
-                    R.string.order_price,
-                    state.totalPrice
-                ),
+                    stringResource(
+                        R.string.order_price,
+                        state.totalPrice,
+                    ),
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .height(54.dp),
-                enabled = state.shoppingCartProducts.isNotEmpty()
+                    Modifier
+                        .fillMaxWidth()
+                        .height(54.dp),
+                enabled = state.shoppingCartProducts.isNotEmpty(),
             )
         }
     }
@@ -104,61 +106,69 @@ private fun ShoppingCartScreenPreview() {
     ShoppingCartTheme {
         ShoppingCartContent(
             navController = rememberNavController(),
-            state = ShoppingCartState(
-                shoppingCartProducts = listOf(
-                    ShoppingCartProduct(
-                        id = 0L,
-                        product = Product(
-                            id = 0L,
-                            imageUrl =
-                            "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net" +
-                                    "%2FMjAyNDAyMjNfMjkg%2FMDAxNzA4NjE1NTg1ODg5.ZFPHZ3Q2HzH7GcYA1_Jl0lsIdvAnzUF2h6Qd6bgDLHkg." +
-                                    "_7ffkgE45HXRVgX2Bywc3B320_tuatBww5y1hS4xjWQg.JPEG%2FIMG_5278.jpg&type=sc960_832",
-                            name = "대전 장인약과",
-                            price = 12000,
-                        ),
-                        quantity = 1
-                    ),
-                    ShoppingCartProduct(
-                        id = 1L,
-                        product = Product(
-                            id = 0L,
-                            imageUrl =
-                            "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net" +
-                                    "%2FMjAyNDAyMjNfMjkg%2FMDAxNzA4NjE1NTg1ODg5.ZFPHZ3Q2HzH7GcYA1_Jl0lsIdvAnzUF2h6Qd6bgDLHkg." +
-                                    "_7ffkgE45HXRVgX2Bywc3B320_tuatBww5y1hS4xjWQg.JPEG%2FIMG_5278.jpg&type=sc960_832",
-                            name = "대전 장인약과",
-                            price = 12000,
-                        ),
-                        quantity = 1
-                    ), ShoppingCartProduct(
-                        id = 2L,
-                        product = Product(
-                            id = 0L,
-                            imageUrl =
-                            "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net" +
-                                    "%2FMjAyNDAyMjNfMjkg%2FMDAxNzA4NjE1NTg1ODg5.ZFPHZ3Q2HzH7GcYA1_Jl0lsIdvAnzUF2h6Qd6bgDLHkg." +
-                                    "_7ffkgE45HXRVgX2Bywc3B320_tuatBww5y1hS4xjWQg.JPEG%2FIMG_5278.jpg&type=sc960_832",
-                            name = "대전 장인약과",
-                            price = 12000,
-                        ),
-                        quantity = 1
-                    ), ShoppingCartProduct(
-                        id = 3L,
-                        product = Product(
-                            id = 0L,
-                            imageUrl =
-                            "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net" +
-                                    "%2FMjAyNDAyMjNfMjkg%2FMDAxNzA4NjE1NTg1ODg5.ZFPHZ3Q2HzH7GcYA1_Jl0lsIdvAnzUF2h6Qd6bgDLHkg." +
-                                    "_7ffkgE45HXRVgX2Bywc3B320_tuatBww5y1hS4xjWQg.JPEG%2FIMG_5278.jpg&type=sc960_832",
-                            name = "대전 장인약과",
-                            price = 12000,
-                        ),
-                        quantity = 1
-                    )
-                ).toMutableStateList()
-            ),
-            onEvent = {}
+            state =
+                ShoppingCartState(
+                    shoppingCartProducts =
+                        listOf(
+                            ShoppingCartProduct(
+                                id = 0L,
+                                product =
+                                    Product(
+                                        id = 0L,
+                                        imageUrl =
+                                            "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net" +
+                                                "%2FMjAyNDAyMjNfMjkg%2FMDAxNzA4NjE1NTg1ODg5.ZFPHZ3Q2HzH7GcYA1_Jl0lsIdvAnzUF2h6Qd6bgDLHkg." +
+                                                "_7ffkgE45HXRVgX2Bywc3B320_tuatBww5y1hS4xjWQg.JPEG%2FIMG_5278.jpg&type=sc960_832",
+                                        name = "대전 장인약과",
+                                        price = 12000,
+                                    ),
+                                quantity = 1,
+                            ),
+                            ShoppingCartProduct(
+                                id = 1L,
+                                product =
+                                    Product(
+                                        id = 0L,
+                                        imageUrl =
+                                            "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net" +
+                                                "%2FMjAyNDAyMjNfMjkg%2FMDAxNzA4NjE1NTg1ODg5.ZFPHZ3Q2HzH7GcYA1_Jl0lsIdvAnzUF2h6Qd6bgDLHkg." +
+                                                "_7ffkgE45HXRVgX2Bywc3B320_tuatBww5y1hS4xjWQg.JPEG%2FIMG_5278.jpg&type=sc960_832",
+                                        name = "대전 장인약과",
+                                        price = 12000,
+                                    ),
+                                quantity = 1,
+                            ),
+                            ShoppingCartProduct(
+                                id = 2L,
+                                product =
+                                    Product(
+                                        id = 0L,
+                                        imageUrl =
+                                            "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net" +
+                                                "%2FMjAyNDAyMjNfMjkg%2FMDAxNzA4NjE1NTg1ODg5.ZFPHZ3Q2HzH7GcYA1_Jl0lsIdvAnzUF2h6Qd6bgDLHkg." +
+                                                "_7ffkgE45HXRVgX2Bywc3B320_tuatBww5y1hS4xjWQg.JPEG%2FIMG_5278.jpg&type=sc960_832",
+                                        name = "대전 장인약과",
+                                        price = 12000,
+                                    ),
+                                quantity = 1,
+                            ),
+                            ShoppingCartProduct(
+                                id = 3L,
+                                product =
+                                    Product(
+                                        id = 0L,
+                                        imageUrl =
+                                            "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net" +
+                                                "%2FMjAyNDAyMjNfMjkg%2FMDAxNzA4NjE1NTg1ODg5.ZFPHZ3Q2HzH7GcYA1_Jl0lsIdvAnzUF2h6Qd6bgDLHkg." +
+                                                "_7ffkgE45HXRVgX2Bywc3B320_tuatBww5y1hS4xjWQg.JPEG%2FIMG_5278.jpg&type=sc960_832",
+                                        name = "대전 장인약과",
+                                        price = 12000,
+                                    ),
+                                quantity = 1,
+                            ),
+                        ).toMutableStateList(),
+                ),
+            onEvent = {},
         )
     }
 }

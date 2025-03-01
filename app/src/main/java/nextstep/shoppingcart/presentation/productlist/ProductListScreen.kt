@@ -66,7 +66,7 @@ fun ProductListScreen(
             coroutineScope.launch {
                 snackbarHostState.showSnackbar(
                     message = snackbarMessage,
-                    duration = SnackbarDuration.Short
+                    duration = SnackbarDuration.Short,
                 )
             }
             viewModel.clearSnackbarMessage()
@@ -87,7 +87,7 @@ fun ProductListContent(
     navController: NavController,
     snackbarHostState: SnackbarHostState,
     state: ProductListState,
-    onEvent: (ProductListEvent) -> Unit
+    onEvent: (ProductListEvent) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -115,22 +115,24 @@ fun ProductListContent(
                 },
             )
         },
-        snackbarHost = { SnackbarHost(snackbarHostState) }
+        snackbarHost = { SnackbarHost(snackbarHostState) },
     ) { contentPadding ->
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(contentPadding)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(contentPadding),
         ) {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 state = rememberLazyGridState(),
-                contentPadding = PaddingValues(
-                    start = 18.dp,
-                    end = 18.dp,
-                    top = 12.dp,
-                    bottom = 24.dp
-                ),
+                contentPadding =
+                    PaddingValues(
+                        start = 18.dp,
+                        end = 18.dp,
+                        top = 12.dp,
+                        bottom = 24.dp,
+                    ),
                 verticalArrangement = Arrangement.spacedBy(20.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
@@ -138,21 +140,22 @@ fun ProductListContent(
                     items = state.products,
                     key = { productItem -> productItem.product.id },
                 ) { productItem ->
-                    val navigateToProductDetail = remember(productItem.product.id) {
-                        { navController.navigate(ProductDetailScreen(productId = productItem.product.id)) }
-                    }
+                    val navigateToProductDetail =
+                        remember(productItem.product.id) {
+                            { navController.navigate(ProductDetailScreen(productId = productItem.product.id)) }
+                        }
 
                     ProductItem(
                         item = productItem,
                         onEvent = onEvent,
-                        onClick = navigateToProductDetail
+                        onClick = navigateToProductDetail,
                     )
                 }
             }
 
             if (state.isLoading) {
                 CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center)
+                    modifier = Modifier.align(Alignment.Center),
                 )
             }
             state.error?.let { error ->
@@ -160,13 +163,12 @@ fun ProductListContent(
                     text = error,
                     color = Color.Red,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.align(Alignment.Center)
+                    modifier = Modifier.align(Alignment.Center),
                 )
             }
         }
     }
 }
-
 
 @Composable
 @Preview(showBackground = true)
@@ -176,7 +178,7 @@ private fun ProductListScreenPreView() {
             navController = rememberNavController(),
             snackbarHostState = SnackbarHostState(),
             state = ProductListState(products = products.toUi()),
-            onEvent = {}
+            onEvent = {},
         )
     }
 }

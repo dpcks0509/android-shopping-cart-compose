@@ -39,7 +39,7 @@ import nextstep.signup.R
 fun ProductItem(
     item: ProductUiModel,
     onEvent: (ProductListEvent) -> Unit,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier.clickable(onClick = onClick),
@@ -48,9 +48,9 @@ fun ProductItem(
             ProductImage(
                 product = item.product,
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1f),
+                    Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
                 contentScale = ContentScale.Crop,
             )
 
@@ -60,23 +60,23 @@ fun ProductItem(
                     minusQuantity = { onEvent(DecreaseProductQuantity(product = item.product)) },
                     plusQuantity = { onEvent(AddProduct(product = item.product)) },
                     modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(12.dp)
-                        .clip(RoundedCornerShape(4.dp))
-                        .background(Color.White)
-                        .align(Alignment.BottomCenter),
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(12.dp)
+                            .clip(RoundedCornerShape(4.dp))
+                            .background(Color.White)
+                            .align(Alignment.BottomCenter),
                 )
             } else {
                 PlusButton(
                     onClick = { onEvent(AddProduct(product = item.product)) },
                     modifier =
-                    Modifier
-                        .padding(12.dp)
-                        .size(42.dp)
-                        .clip(CircleShape)
-                        .background(Color.White)
-                        .align(Alignment.BottomEnd),
+                        Modifier
+                            .padding(12.dp)
+                            .size(42.dp)
+                            .clip(CircleShape)
+                            .background(Color.White)
+                            .align(Alignment.BottomEnd),
                 )
             }
         }
@@ -115,7 +115,7 @@ class ProductItemPreviewParameterProvider : PreviewParameterProvider<ProductUiMo
                 Product(
                     id = 0L,
                     imageUrl =
-                    "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net" +
+                        "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net" +
                             "%2FMjAyNDAyMjNfMjkg%2FMDAxNzA4NjE1NTg1ODg5.ZFPHZ3Q2HzH7GcYA1_Jl0lsIdvAnzUF2h6Qd6bgDLHkg." +
                             "_7ffkgE45HXRVgX2Bywc3B320_tuatBww5y1hS4xjWQg.JPEG%2FIMG_5278.jpg&type=sc960_832",
                     name = "대전 장인약과",
@@ -127,7 +127,7 @@ class ProductItemPreviewParameterProvider : PreviewParameterProvider<ProductUiMo
                 Product(
                     id = 0L,
                     imageUrl =
-                    "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net" +
+                        "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net" +
                             "%2FMjAyNDAyMjNfMjkg%2FMDAxNzA4NjE1NTg1ODg5.ZFPHZ3Q2HzH7GcYA1_Jl0lsIdvAnzUF2h6Qd6bgDLHkg." +
                             "_7ffkgE45HXRVgX2Bywc3B320_tuatBww5y1hS4xjWQg.JPEG%2FIMG_5278.jpg&type=sc960_832",
                     name = "대전 장인약과",

@@ -15,7 +15,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,14 +43,14 @@ import nextstep.signup.R
 @Composable
 fun ProductDetailScreen(
     navController: NavController,
-    viewModel: ProductDetailViewModel = hiltViewModel()
+    viewModel: ProductDetailViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     ProductDetailContent(
         navController = navController,
         state = state,
-        onEvent = viewModel::onEvent
+        onEvent = viewModel::onEvent,
     )
 }
 
@@ -59,7 +58,7 @@ fun ProductDetailScreen(
 private fun ProductDetailContent(
     navController: NavController,
     state: ProductDetailState,
-    onEvent: (ProductDetailEvent) -> Unit
+    onEvent: (ProductDetailEvent) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -72,23 +71,24 @@ private fun ProductDetailContent(
         },
     ) { contentPadding ->
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(contentPadding)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(contentPadding),
         ) {
             state.product?.let { product ->
                 Column(
                     modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .padding(contentPadding),
+                        Modifier
+                            .fillMaxSize()
+                            .padding(contentPadding),
                 ) {
                     ProductImage(
                         product = product,
                         modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .aspectRatio(1f),
+                            Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(1f),
                         contentScale = ContentScale.Crop,
                     )
 
@@ -129,16 +129,16 @@ private fun ProductDetailContent(
                         },
                         text = stringResource(R.string.add_shopping_cart_product),
                         modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .height(54.dp),
+                            Modifier
+                                .fillMaxWidth()
+                                .height(54.dp),
                     )
                 }
             }
 
             if (state.isLoading) {
                 CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center)
+                    modifier = Modifier.align(Alignment.Center),
                 )
             }
             state.error?.let { error ->
@@ -146,7 +146,7 @@ private fun ProductDetailContent(
                     text = error,
                     color = Color.Red,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.align(Alignment.Center)
+                    modifier = Modifier.align(Alignment.Center),
                 )
             }
         }
@@ -157,16 +157,22 @@ private fun ProductDetailContent(
 @Preview(showBackground = true)
 private fun ProductDetailScreenPreview() {
     ShoppingCartTheme {
-        ProductDetailContent(navController = rememberNavController(), state = ProductDetailState(
-            product = Product(
-                id = 0L,
-                imageUrl =
-                "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net" +
-                        "%2FMjAyNDAyMjNfMjkg%2FMDAxNzA4NjE1NTg1ODg5.ZFPHZ3Q2HzH7GcYA1_Jl0lsIdvAnzUF2h6Qd6bgDLHkg." +
-                        "_7ffkgE45HXRVgX2Bywc3B320_tuatBww5y1hS4xjWQg.JPEG%2FIMG_5278.jpg&type=sc960_832",
-                name = "대전 장인약과",
-                price = 12000,
-            )
-        ), onEvent = {})
+        ProductDetailContent(
+            navController = rememberNavController(),
+            state =
+                ProductDetailState(
+                    product =
+                        Product(
+                            id = 0L,
+                            imageUrl =
+                                "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net" +
+                                    "%2FMjAyNDAyMjNfMjkg%2FMDAxNzA4NjE1NTg1ODg5.ZFPHZ3Q2HzH7GcYA1_Jl0lsIdvAnzUF2h6Qd6bgDLHkg." +
+                                    "_7ffkgE45HXRVgX2Bywc3B320_tuatBww5y1hS4xjWQg.JPEG%2FIMG_5278.jpg&type=sc960_832",
+                            name = "대전 장인약과",
+                            price = 12000,
+                        ),
+                ),
+            onEvent = {},
+        )
     }
 }

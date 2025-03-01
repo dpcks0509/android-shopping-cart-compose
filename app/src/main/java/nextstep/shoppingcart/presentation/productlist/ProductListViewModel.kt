@@ -22,76 +22,87 @@ import nextstep.shoppingcart.presentation.util.Screen
 import javax.inject.Inject
 
 @HiltViewModel
-class ProductListViewModel @Inject constructor(
-    private val productUseCase: ProductUseCase,
-    private val shoppingCartUseCase: ShoppingCartUseCase,
-    savedStateHandle: SavedStateHandle
-) : ViewModel() {
-    private val _state: MutableStateFlow<ProductListState> =
-        MutableStateFlow(ProductListState(snackbarMessage = savedStateHandle.toRoute<Screen.ProductListScreen>().snackbarMessage))
-    val state: StateFlow<ProductListState> = _state.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000),
-        initialValue = ProductListState(isLoading = true)
-    )
-
-    fun onEvent(event: ProductListEvent) {
-        when (event) {
-            is AddProduct -> addProduct(event.product)
-            is DecreaseProductQuantity -> decreaseProductQuantity(event.product)
-        }
-    }
-
-    fun loadProducts() {
-        viewModelScope.launch {
-            productUseCase.getProducts().fold(
-                onSuccess = { products ->
-                    val productUiModels = products.map { product ->
-                        ProductUiModel(
-                            product = product,
-                            quantity = shoppingCartUseCase.getQuantityByProduct(product)
-                                .getOrDefault(0)
-                        )
-                    }
-
-                    _state.value = _state.value.copy(
-                        products = productUiModels.toMutableStateList(),
-                        isLoading = false,
-                        error = null
-                    )
-                },
-                onFailure = { error ->
-                    _state.value = _state.value.copy(
-                        products = mutableStateListOf(),
-                        isLoading = false,
-                        error = error.message
-                    )
-                }
+class ProductListViewModel
+    @Inject
+    constructor(
+        private val productUseCase: ProductUseCase,
+        private val shoppingCartUseCase: ShoppingCartUseCase,
+        savedStateHandle: SavedStateHandle,
+    ) : ViewModel() {
+        private val _state: MutableStateFlow<ProductListState> =
+            MutableStateFlow(ProductListState(snackbarMessage = savedStateHandle.toRoute<Screen.ProductListScreen>().snackbarMessage))
+        val state: StateFlow<ProductListState> =
+            _state.stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = ProductListState(isLoading = true),
             )
+
+        fun onEvent(event: ProductListEvent) {
+            when (event) {
+                is AddProduct -> addProduct(event.product)
+                is DecreaseProductQuantity -> decreaseProductQuantity(event.product)
+            }
+        }
+
+        fun loadProducts() {
+            viewModelScope.launch {
+                productUseCase.getProducts().fold(
+                    onSuccess = { products ->
+                        val productUiModels =
+                            products.map { product ->
+                                ProductUiModel(
+                                    product = product,
+                                    quantity =
+                                        shoppingCartUseCase.getQuantityByProduct(product)
+                                            .getOrDefault(0),
+                                )
+                            }
+
+                        _state.value =
+                            _state.value.copy(
+                                products = productUiModels.toMutableStateList(),
+                                isLoading = false,
+                                error = null,
+                            )
+                    },
+                    onFailure = { error ->
+                        _state.value =
+                            _state.value.copy(
+                                products = mutableStateListOf(),
+                                isLoading = false,
+                                error = error.message,
+                            )
+                    },
+                )
+            }
+        }
+
+        fun clearSnackbarMessage() {
+            _state.value = _state.value.copy(snackbarMessage = null)
+        }
+
+        private fun addProduct(product: Product) {
+            shoppingCartUseCase.addProduct(product)
+            updateProductQuantity(productId = product.id, value = 1)
+        }
+
+        private fun decreaseProductQuantity(product: Product) {
+            shoppingCartUseCase.decreaseProductQuantity(product)
+            updateProductQuantity(productId = product.id, value = -1)
+        }
+
+        private fun updateProductQuantity(
+            productId: Long,
+            value: Int,
+        ) {
+            val index =
+                _state.value.products.indexOfFirst { productItem ->
+                    productItem.product.id == productId
+                }
+            if (index != -1) {
+                _state.value.products[index] =
+                    _state.value.products[index].copy(quantity = _state.value.products[index].quantity + value)
+            }
         }
     }
-
-    fun clearSnackbarMessage() {
-        _state.value = _state.value.copy(snackbarMessage = null)
-    }
-
-    private fun addProduct(product: Product) {
-        shoppingCartUseCase.addProduct(product)
-        updateProductQuantity(productId = product.id, value = 1)
-    }
-
-    private fun decreaseProductQuantity(product: Product) {
-        shoppingCartUseCase.decreaseProductQuantity(product)
-        updateProductQuantity(productId = product.id, value = -1)
-    }
-
-    private fun updateProductQuantity(productId: Long, value: Int) {
-        val index = _state.value.products.indexOfFirst { productItem ->
-            productItem.product.id == productId
-        }
-        if (index != -1) {
-            _state.value.products[index] =
-                _state.value.products[index].copy(quantity = _state.value.products[index].quantity + value)
-        }
-    }
-}

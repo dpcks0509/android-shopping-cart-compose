@@ -21,13 +21,12 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
-
     @Provides
     @Singleton
     fun provideProductUseCase(repository: ProductRepository): ProductUseCase {
         return ProductUseCase(
             getProducts = GetProducts(repository),
-            getProduct = GetProduct(repository)
+            getProduct = GetProduct(repository),
         )
     }
 
@@ -40,7 +39,7 @@ object UseCaseModule {
             addProduct = AddProduct(repository),
             decreaseProductQuantity = DecreaseProductQuantity(repository),
             removeProduct = RemoveProduct(repository),
-            clearProducts = ClearProducts(repository)
+            clearProducts = ClearProducts(repository),
         )
     }
 }

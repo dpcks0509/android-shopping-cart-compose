@@ -8,5 +8,5 @@ data class ProductListState(
     val products: SnapshotStateList<ProductUiModel> = mutableStateListOf(),
     val isLoading: Boolean = false,
     val error: String? = null,
-    val snackbarMessage: String? = null
+    val snackbarMessage: String? = null,
 )

@@ -6,5 +6,5 @@ data class ShoppingCartUseCase(
     val addProduct: AddProduct,
     val decreaseProductQuantity: DecreaseProductQuantity,
     val removeProduct: RemoveProduct,
-    val clearProducts: ClearProducts
+    val clearProducts: ClearProducts,
 )

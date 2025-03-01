@@ -20,5 +20,4 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindShoppingCartRepository(repositoryImpl: ShoppingCartRepositoryImpl): ShoppingCartRepository
-
 }

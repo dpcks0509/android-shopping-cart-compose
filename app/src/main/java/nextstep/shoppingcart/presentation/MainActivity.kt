@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import dagger.hilt.android.AndroidEntryPoint
 import nextstep.shoppingcart.presentation.productdetail.ProductDetailScreen
 import nextstep.shoppingcart.presentation.productlist.ProductListScreen
@@ -25,7 +24,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
-                    startDestination = ProductListScreen()
+                    startDestination = ProductListScreen(),
                 ) {
                     composable<ProductListScreen> {
                         ProductListScreen(

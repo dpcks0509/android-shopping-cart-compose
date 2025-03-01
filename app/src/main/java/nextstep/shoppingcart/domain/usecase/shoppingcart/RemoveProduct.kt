@@ -4,7 +4,7 @@ import nextstep.shoppingcart.domain.model.Product
 import nextstep.shoppingcart.domain.repository.ShoppingCartRepository
 
 class RemoveProduct(
-    private val repository: ShoppingCartRepository
+    private val repository: ShoppingCartRepository,
 ) {
     operator fun invoke(product: Product): Result<Unit> {
         return repository.removeProduct(product)

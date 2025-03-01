@@ -4,9 +4,8 @@ import nextstep.shoppingcart.domain.model.Product
 import nextstep.shoppingcart.domain.repository.ProductRepository
 
 class GetProducts(
-    private val repository: ProductRepository
+    private val repository: ProductRepository,
 ) {
-
     operator fun invoke(): Result<List<Product>> {
         return repository.getProducts()
     }
