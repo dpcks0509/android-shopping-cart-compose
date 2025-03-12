@@ -1,4 +1,4 @@
-# android-shopping-cart
+# android-shopping-cart-compose
 
 ## 1단계 - 장바구니(상품 목록)
 
