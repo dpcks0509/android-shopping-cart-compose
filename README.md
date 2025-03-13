@@ -7,9 +7,12 @@
 - Asynchronous : Coroutines, Flow
 - DI : Hilt
 
-## 1단계 - 장바구니(상품 목록)
-![장바구니 - 상품 목록](https://github.com/user-attachments/assets/524995aa-f8d0-4a93-a657-2dc5920f3ebb)
+</br>
 
+## 1단계 - 장바구니(상품 목록)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/524995aa-f8d0-4a93-a657-2dc5920f3ebb" width="30%" />
+</p>
 
 ### 기능 요구 사항
 
@@ -22,10 +25,13 @@
 - [x] 컴포저블 함수가 너무 많은 일을 하지 않도록 분리하기 위해 노력해 본다.
     - [x] 의미있는 단위의 함수를 모아 별도의 파일로 분리해본다.
 
-## 2단계 - 장바구니(상품 상세)
-![장바구니 - 상품 상세](https://github.com/user-attachments/assets/e0e630b4-7c3f-425b-9492-20c377b9cd1f)
-![장바구니 - 상세](https://github.com/user-attachments/assets/cbacaeea-2ea3-4795-809f-5d02d93f83e1)
+</br>
 
+## 2단계 - 장바구니(상품 상세)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/e0e630b4-7c3f-425b-9492-20c377b9cd1f" width="30%" />
+  <img src="https://github.com/user-attachments/assets/cbacaeea-2ea3-4795-809f-5d02d93f83e1" width="30%" />
+</p>
 
 ### 기능 요구 사항
 
@@ -44,9 +50,12 @@
 - [x] 컴포저블 함수가 너무 많은 일을 하지 않도록 분리하기 위해 노력해 본다.
     - [x] 의미있는 단위의 함수를 모아 별도의 파일로 분리해본다.
 
-## 3단계 - 장바구니(담기)
-![장바구니 - 상세 (1)](https://github.com/user-attachments/assets/990be440-2b6e-48d8-ab82-797af38d86ef)
+</br>
 
+## 3단계 - 장바구니(담기)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/990be440-2b6e-48d8-ab82-797af38d86ef" width="30%" />
+</p>
 
 ### 기능 요구 사항
 
@@ -61,10 +70,14 @@
 - [x] 상품을 주문하는 기능에 대해서는 구현하지 않아도 된다.
 - [x] 장바구니 화면에 대한 테스트 코드를 작성한다.
 
+</br>
+
 ## 4단계 - 장바구니(수량)
-![장바구니 - 상품 목록 (1)](https://github.com/user-attachments/assets/26811391-5cd5-4dbc-afee-e72d5f90e3ff)
-![장바구니 - 담은 수량 노출](https://github.com/user-attachments/assets/cb1e26ea-4b6c-4958-aed6-9eb0aee86299)
-![장바구니 - 상세 (2)](https://github.com/user-attachments/assets/39cb3cd5-d246-4c09-b5ee-075a764eb2d2)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/26811391-5cd5-4dbc-afee-e72d5f90e3ff" width="30%" />
+  <img src="https://github.com/user-attachments/assets/cb1e26ea-4b6c-4958-aed6-9eb0aee86299" width="30%" />
+  <img src="https://github.com/user-attachments/assets/39cb3cd5-d246-4c09-b5ee-075a764eb2d2" width="30%" />
+</p>
 
 
 ### 기능 요구 사항
