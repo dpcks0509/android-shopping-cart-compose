@@ -1,6 +1,15 @@
 # android-shopping-cart-compose
 
+## 🛠 사용 기술
+- Language : Kotlin
+- Architecture: MVI, Clean Architecture
+- Jetpack : Compose, Navigation
+- Asynchronous : Coroutines, Flow
+- DI : Hilt
+
 ## 1단계 - 장바구니(상품 목록)
+![장바구니 - 상품 목록](https://github.com/user-attachments/assets/524995aa-f8d0-4a93-a657-2dc5920f3ebb)
+
 
 ### 기능 요구 사항
 
@@ -8,12 +17,15 @@
 
 ### 프로그래밍 요구 사항
 
-- [x] ViewModel, Hilt 등은 장바구니 미션에서 활용하지 않는다. 컴포즈 학습에 집중하자.
+- [x] Repository, DataSource 구현 리소스를 최대한 줄이고, 컴포즈 학습에 집중하기 위한 수단으로 활용한다.
 - [x] 상품 목록 화면을 구현할 때 Lazy 컴포넌트를 활용한다.
 - [x] 컴포저블 함수가 너무 많은 일을 하지 않도록 분리하기 위해 노력해 본다.
     - [x] 의미있는 단위의 함수를 모아 별도의 파일로 분리해본다.
 
 ## 2단계 - 장바구니(상품 상세)
+![장바구니 - 상품 상세](https://github.com/user-attachments/assets/e0e630b4-7c3f-425b-9492-20c377b9cd1f)
+![장바구니 - 상세](https://github.com/user-attachments/assets/cbacaeea-2ea3-4795-809f-5d02d93f83e1)
+
 
 ### 기능 요구 사항
 
@@ -33,6 +45,8 @@
     - [x] 의미있는 단위의 함수를 모아 별도의 파일로 분리해본다.
 
 ## 3단계 - 장바구니(담기)
+![장바구니 - 상세 (1)](https://github.com/user-attachments/assets/990be440-2b6e-48d8-ab82-797af38d86ef)
+
 
 ### 기능 요구 사항
 
@@ -48,6 +62,10 @@
 - [x] 장바구니 화면에 대한 테스트 코드를 작성한다.
 
 ## 4단계 - 장바구니(수량)
+![장바구니 - 상품 목록 (1)](https://github.com/user-attachments/assets/26811391-5cd5-4dbc-afee-e72d5f90e3ff)
+![장바구니 - 담은 수량 노출](https://github.com/user-attachments/assets/cb1e26ea-4b6c-4958-aed6-9eb0aee86299)
+![장바구니 - 상세 (2)](https://github.com/user-attachments/assets/39cb3cd5-d246-4c09-b5ee-075a764eb2d2)
+
 
 ### 기능 요구 사항
 
